@@ -56,8 +56,8 @@ describe Que do
     expect( que.job_list.select(&:has_dependencies?).length ).to eq 2
   end
 
-  it 'should raise a SelfDependenceError when a job depends upon itself' do
-    expect{ Que.new 'a => a' }.to raise_exception(Que::SelfDependenceError)
+  it 'should raise a SelfDependencyError when a job depends upon itself' do
+    expect{ Que.new 'a => a' }.to raise_exception(Que::SelfDependencyError)
   end
   
   it 'should sort the Jobs using TSort' do
@@ -78,7 +78,7 @@ describe Que do
     expect( que.run ).to eq 'afcbde'
   end
 
-  it 'should raise a TSort::Cyclic exception' do
+  it 'should raise a CyclicDependencyError' do
     que = Que.new %|
       a =>
       b => c
@@ -88,6 +88,6 @@ describe Que do
       f => b
     |
 
-    expect { que.tsort }.to raise_exception(TSort::Cyclic)
+    expect { que.tsort }.to raise_exception(Que::CyclicDependencyError)
   end
 end

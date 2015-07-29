@@ -34,7 +34,8 @@ module Que
 
         unsorted.tsort
       rescue TSort::Cyclic => e
-        fail TSort::Cyclic, 'Jobs cannot have Cyclic dependencies: #{e}.'
+        fail CyclicDependencyError, 
+          'Jobs cannot have Circular dependencies: #{e}.'
       end
     end
 
@@ -68,7 +69,8 @@ module Que
     def generate_jobs(jobs)
       jobs.each_with_object([]) do |(id, dependencies), jobs|
         if Array(dependencies).include?(id)
-          fail SelfDependenceError, "jobs can't depend upon themselves."
+          fail SelfDependencyError, 
+            "Jobs can't depend upon themselves: [#{id}, #{dependencies.to_s}]."
         end
 
         jobs << Job.new(id, dependencies)

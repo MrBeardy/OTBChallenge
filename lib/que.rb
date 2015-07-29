@@ -1,7 +1,8 @@
 require_relative 'que/all'
 
 module Que
-  class SelfDependenceError < StandardError; end
+  class CyclicDependencyError < StandardError; end
+  class SelfDependencyError < StandardError; end
 
   # Forward any missing methods over to Que::Queue
   # TODO: implement a more concrete solution.
