@@ -5,11 +5,7 @@ module Que
   class Queue
     attr_reader :job_list
 
-    def initialize(jobs = [])
-      if jobs.is_a? String
-        jobs = Parser.from_string(jobs)
-      end
-      
+    def initialize(jobs = [])  
       @job_list = JobList.new(jobs)
     end
 

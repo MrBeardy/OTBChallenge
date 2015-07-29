@@ -54,6 +54,10 @@ describe Que do
     expect( que.length ).to eq 4
     expect( que.job_list.select(&:has_dependencies?).length ).to eq 2
   end
+
+  it 'should raise a SelfDependenceError when a job depends upon itself' do
+    expect{ Que.new 'a => a' }.to raise_exception(Que::SelfDependenceError)
+  end
   
   it 'should sort the Jobs using TSort' do
     que = Que.new %|

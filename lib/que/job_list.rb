@@ -1,6 +1,10 @@
 module Que
   class JobList
     def initialize(jobs = [])
+      if jobs.is_a? String
+        jobs = Parser.from_string(jobs)
+      end
+
       @jobs = generate_jobs(jobs)
     end
 
@@ -61,6 +65,10 @@ module Que
     # Create Job instances for each of the jobs.
     def generate_jobs(jobs)
       jobs.each_with_object([]) do |(id, dependencies), jobs|
+        if Array(dependencies).include?(id)
+          fail SelfDependenceError, "jobs can't depend upon themselves."
+        end
+
         jobs << Job.new(id, dependencies)
       end
     end
