@@ -1,4 +1,4 @@
-require_relative 'Que/all'
+require_relative 'que/all'
 
 module Que
   # Forward any missing methods over to Que::Queue

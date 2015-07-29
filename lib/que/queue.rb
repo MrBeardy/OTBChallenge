@@ -6,13 +6,11 @@ module Que
     attr_reader :job_list
 
     def initialize(jobs = [])
+      if jobs.is_a? String
+        jobs = Parser.from_string(jobs)
+      end
+      
       @job_list = JobList.new(jobs)
-    end
-
-    # Generate a new Que object by passing
-    # in a formatted string.
-    def self.from_string(str = "")
-      new(Parser.from_string(str))
     end
 
     # Convenience methods that interact with JobList
@@ -29,7 +27,7 @@ module Que
     end
 
     def run
-      @job_list.tsort.each_with_object(order = "") do |job, _|
+      @job_list.tsort.each_with_object(order = '') do |job, _|
         order << job.run
       end
     end

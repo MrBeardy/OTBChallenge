@@ -1,19 +1,49 @@
 require 'spec_helper'
 
 describe Que do
-  it "should create a new Que object" do
-    no_job_que = Que.new
+  it 'should return a blank string' do
+    que = Que.new
+
+    expect( que.run ).to eq ''
+  end
+
+  it 'should return a single job' do
+    que = Que.new ' a => '
+
+    expect( que.run ).to eq 'a'
+  end
+
+  it 'should return the same value passed in' do
+    que = Que.new %|
+      a =>
+      b =>
+      c =>
+    |
+
+    expect( que.run ).to eq 'abc'
+  end
+
+  it 'should accept inline strings with specific formatting' do
+    que = Que.new 'a => b b => c c => '
+    que_compact = Que.new 'a=>bb=>cc=>'
+    que_semicolons = Que.new 'a => b; b => c; c => '
+
+    expect( que.run ).to eq 'cba'
+    expect( que.run ).to eq( que_compact.run )
+    expect( que.run ).to eq( que_semicolons.run )
+  end
+
+  it 'should create a new Que object from a multi-dimensional array' do
     que = Que.new [
       [:a, :b], 
       [:b],
     ]
 
-    expect( no_job_que.length ).to eq 0
     expect( que.length ).to eq 2
   end
 
-  it "should parse a formatted string and produce a Que with Jobs" do
-    que = Que.from_string %|
+  it 'should create a new Que object from a formatted string' do
+    que = Que.new %|
       a =>
         b =>
       c => a
@@ -25,8 +55,8 @@ describe Que do
     expect( que.job_list.select(&:has_dependencies?).length ).to eq 2
   end
   
-  it "should sort the Jobs using TSort" do
-    que = Que.from_string %|
+  it 'should sort the Jobs using TSort' do
+    que = Que.new %|
       a =>
       b => c
       c => f
@@ -37,14 +67,14 @@ describe Que do
 
     sorted = que.job_list.tsort_ids
 
-    expect( sorted.find_index("f") ).to be < sorted.find_index("c")
-    expect( sorted.find_index("c") ).to be < sorted.find_index("b")
+    expect( sorted.find_index('f') ).to be < sorted.find_index('c')
+    expect( sorted.find_index('c') ).to be < sorted.find_index('b')
 
-    expect( que.run ).to eq "afcbde"
+    expect( que.run ).to eq 'afcbde'
   end
 
-  it "should raise a TSort::Cyclic exception" do
-    que = Que.from_string %|
+  it 'should raise a TSort::Cyclic exception' do
+    que = Que.new %|
       a =>
       b => c
       c => f
