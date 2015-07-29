@@ -5,6 +5,8 @@ module Que
         jobs = Parser.from_string(jobs)
       end
 
+      # TODO: Add fail-safe for symbols.
+
       @jobs = generate_jobs(jobs)
     end
 

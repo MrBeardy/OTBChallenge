@@ -35,11 +35,12 @@ describe Que do
 
   it 'should create a new Que object from a multi-dimensional array' do
     que = Que.new [
-      [:a, :b], 
-      [:b],
+      ["a", "b"], 
+      ["b"],
     ]
 
-    expect( que.length ).to eq 2
+    expect( que.run.length ).to eq 2
+    expect( que.run[0] ).to eq "b"
   end
 
   it 'should create a new Que object from a formatted string' do

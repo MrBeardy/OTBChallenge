@@ -11,7 +11,7 @@ proper dependency ordering and Cyclic dependency safety.
 ```ruby
 require 'que'
 
-que = Que.from_string %|
+que = Que.new %|
   a =>
   b => c
   c => f
@@ -23,10 +23,17 @@ que = Que.from_string %|
 p que.job_list.tsort_ids
 p que.run
 
+Que.new([
+  ["a", "b"]
+  ["b", "c"]
+  ["c"]
+]).run
+
 # results
 # 
 # ["a", "f", "c", "b", "d", "e"]
 # "afcbde"
+# "cba"
 ```
 
 ## Command Line
