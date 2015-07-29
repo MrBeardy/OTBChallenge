@@ -5,8 +5,7 @@ module Que
     attr_reader :id, :dependencies
 
     def initialize(id, dependencies = [])
-      @id = id
-      @dependencies = Array(dependencies)
+      @id, @dependencies = id, Array(dependencies)
     end
 
     def run

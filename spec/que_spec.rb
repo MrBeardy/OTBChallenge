@@ -53,6 +53,6 @@ describe Que do
       f => b
     |
 
-    expect { que.tsort }.to raise_exception(Que::CyclicDependencyError)
+    expect { que.tsort }.to raise_exception(TSort::Cyclic)
   end
 end

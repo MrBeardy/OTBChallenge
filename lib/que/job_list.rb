@@ -27,8 +27,8 @@ module Que
         end
 
         unsorted.tsort
-      rescue TSort::Cyclic
-        fail CyclicDependencyError, "Jobs cannot have Cyclic dependencies."
+      rescue TSort::Cyclic => e
+        fail TSort::Cyclic, "Jobs cannot have Cyclic dependencies: #{e}."
       end
     end
 
