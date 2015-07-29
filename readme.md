@@ -8,7 +8,6 @@ This job list can then be sorted using
 proper dependency ordering and Cyclic dependency safety.
 
 # Usage
-
 ```ruby
 require 'que'
 
@@ -28,7 +27,13 @@ p que.run
 # 
 # ["a", "f", "c", "b", "d", "e"]
 # "afcbde"
+```
 
+## Command Line
+
+```bash
+$ bin/que "a=>b;b=>c;c=>"
+cba
 ```
 
 # Roadmap

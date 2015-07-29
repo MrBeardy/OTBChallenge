@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+$:<< File.dirname(File.expand_path("../../lib/que", __FILE__))
+
+require 'que'
+puts Que.new(ARGV.join(" ")).run
