@@ -35,7 +35,7 @@ module Que
         unsorted.tsort
       rescue TSort::Cyclic => e
         fail CyclicDependencyError, 
-          'Jobs cannot have Circular dependencies: #{e}.'
+          "Jobs cannot have Circular dependencies: #{e}."
       end
     end
 

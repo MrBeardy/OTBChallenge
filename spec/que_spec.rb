@@ -54,6 +54,7 @@ describe Que do
 
     expect( que.length ).to eq 4
     expect( que.job_list.select(&:has_dependencies?).length ).to eq 2
+    expect( que.run ).to eq "abcd"
   end
 
   it 'should raise a SelfDependencyError when a job depends upon itself' do
