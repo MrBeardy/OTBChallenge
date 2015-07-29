@@ -3,10 +3,10 @@ module Que
   # Holds instances of Jobs, which can be run
   # in order of dependence.
   class Queue
-    attr_accessor :jobs
+    attr_reader :job_list
 
     def initialize(jobs = [])
-      @jobs = generate_jobs(jobs)
+      @job_list = JobList.new(jobs)
     end
 
     # Generate a new Que object by passing
@@ -15,17 +15,22 @@ module Que
       new(Parser.from_string(str))
     end
 
-    # Returns an array of Jobs ordered by dependency
-    def ordered_jobs
-      
+    # Convenience methods that interact with JobList
+    def tsort
+      @job_list.tsort
     end
 
-    private
+    def tsort!
+      @job_list.tsort!
+    end
 
-    # Create Job instances for each of the jobs.
-    def generate_jobs(jobs)
-      jobs.each_with_object([]) do |(id, dependencies), jobs|
-        jobs << Job.new(id, dependencies)
+    def length
+      @job_list.length
+    end
+
+    def run
+      @job_list.tsort.each_with_object(order = "") do |job, _|
+        order << job.run
       end
     end
   end

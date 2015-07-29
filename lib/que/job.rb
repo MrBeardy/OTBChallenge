@@ -2,12 +2,11 @@ module Que
 
   # Holds information for a single job, including IDs for any dependencies.
   class Job
-    attr_reader :id
-    attr_accessor :dependencies
+    attr_reader :id, :dependencies
 
-    def initialize(id, dependencies = "")
+    def initialize(id, dependencies = [])
       @id = id
-      @dependencies = dependencies
+      @dependencies = Array(dependencies)
     end
 
     def run
