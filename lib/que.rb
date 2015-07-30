@@ -6,7 +6,7 @@ module Que
 
   # Forward any missing methods over to Que::Queue
   # TODO: implement a more concrete solution.
-  def self.method_missing(method, *args)
-    Queue.method(method).call(*args)
+  def self.method_missing(method, *args, &block)
+    Queue.method(method).call(*args, &block)
   end
 end

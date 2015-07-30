@@ -4,14 +4,18 @@ module Que
   class Job
     attr_reader :id, :dependencies
 
-    def initialize(id, dependencies = [])
+    def initialize(id, dependencies = [], &block)
       @id, @dependencies = id, Array(dependencies)
+
+      @proc = block if block_given?
     end
 
     def run
-      # TODO: Add ability for jobs to run procs.
-
-      @id
+      if @proc
+        @proc.call
+      else
+        @id
+      end
     end
 
     def has_dependencies?

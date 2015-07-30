@@ -122,4 +122,23 @@ describe Que do
 
     expect { que.tsort }.to raise_exception(Que::CyclicDependencyError)
   end
+
+  it 'should allow blocks to be passed to Jobs' do
+    job = Que::Job.new('a') { 'Hello World' }
+    job_nesting = Que::Job.new('b') do
+      que = Que.new %|
+        a => b
+        b => c
+        c => 
+      |
+
+      que.run
+    end
+
+    job_no_block = Que::Job.new('c')
+
+    expect( job.run ).to eq 'Hello World'
+    expect( job_nesting.run ).to eq 'cba'
+    expect( job_no_block.run ).to eq 'c'
+  end
 end
