@@ -1,4 +1,4 @@
-# Que 0.0.5
+# Que 0.0.6
 
 Que is a small library that takes a formatted string (or multi-dimensional 
 array) as input and stores it as Jobs with optional dependencies.
