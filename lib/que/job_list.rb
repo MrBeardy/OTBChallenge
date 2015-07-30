@@ -8,6 +8,12 @@ module Que
       # TODO: Add fail-safe for symbols.
 
       @jobs = generate_jobs(jobs)
+
+      # Fail on any self-depenent jobs
+      unless ( (self_dependents = @jobs.select(&:has_self_dependency?)).empty? )
+        fail SelfDependencyError, 
+          "Jobs can't depend upon themselves.\n\t#{self_dependents}\n\n"
+      end
     end
 
     def <<(job)
@@ -68,12 +74,12 @@ module Que
     # Create Job instances for each of the jobs.
     def generate_jobs(jobs)
       jobs.each_with_object([]) do |(id, dependencies), jobs|
-        if Array(dependencies).include?(id)
-          fail SelfDependencyError, 
-            "Jobs can't depend upon themselves: [#{id}, #{dependencies.to_s}]."
+        # Allow Job objects and Arrays to be interchanged.
+        if id.is_a? Job
+          jobs << id
+        else
+          jobs << Job.new(id, dependencies)
         end
-
-        jobs << Job.new(id, dependencies)
       end
     end
   end

@@ -35,12 +35,32 @@ describe Que do
 
   it 'should create a new Que object from a multi-dimensional array' do
     que = Que.new [
-      ["a", "b"], 
-      ["b"],
+      ['a', 'b'], 
+      ['b'],
     ]
 
     expect( que.run.length ).to eq 2
-    expect( que.run[0] ).to eq "b"
+    expect( que.run[0] ).to eq 'b'
+  end
+
+  it 'should suppot jobs with multiple dependencies' do
+    que = Que.new [
+      ['a', ['b', 'c']],
+      ['b'],
+      ['c']
+    ]
+
+    expect( que.run ).to eq 'bca'
+  end
+
+  it 'should support Job objects inside the array passed to the constructor' do
+    que = Que.new [
+      Que::Job.new('a', ['b']),
+      ['b', 'c'],
+      Que::Job.new('c'),
+    ]
+
+    expect( que.run ).to eq 'cba'
   end
 
   it 'should create a new Que object from a formatted string' do
@@ -54,11 +74,18 @@ describe Que do
 
     expect( que.length ).to eq 4
     expect( que.job_list.select(&:has_dependencies?).length ).to eq 2
-    expect( que.run ).to eq "abcd"
+    expect( que.run ).to eq 'abcd'
   end
 
   it 'should raise a SelfDependencyError when a job depends upon itself' do
     expect{ Que.new 'a => a' }.to raise_exception(Que::SelfDependencyError)
+    expect{ 
+      Que.new [
+        ['a', 'b'],
+        Que::Job.new('b', ['c']),
+        ['c', ['a', 'b', 'c']],
+      ]
+    }.to raise_exception(Que::SelfDependencyError)
   end
   
   it 'should sort the Jobs using TSort' do
@@ -77,6 +104,10 @@ describe Que do
     expect( sorted.find_index('c') ).to be < sorted.find_index('b')
 
     expect( que.run ).to eq 'afcbde'
+
+    que.tsort!
+
+    expect( que.job_list.to_a.map(&:id).join ).to eq 'afcbde'
   end
 
   it 'should raise a CyclicDependencyError' do

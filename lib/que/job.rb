@@ -17,5 +17,9 @@ module Que
     def has_dependencies?
       !(dependencies.nil? || dependencies.empty?)
     end
+
+    def has_self_dependency?
+      dependencies.include? @id
+    end
   end
 end
