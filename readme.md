@@ -38,12 +38,12 @@ Que.new([
 
 ### Jobs
 ```ruby
-jobs = [
-  Que::Job.new("a") { "Hello " },
-  Que::Job.new("b") { "world" },
+que = Que.new [
+  Que::Job.new('a', ['b']) { "world" },
+  Que::Job.new('b') { "Hello " },
 ]
 
-p Que.new(jobs).run
+p que.run
 # => "Hello world"
 ```
 
