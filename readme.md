@@ -36,7 +36,18 @@ Que.new([
 # "cba"
 ```
 
-## Command Line
+### Jobs
+```ruby
+jobs = [
+  Que::Job.new("a") { "Hello " },
+  Que::Job.new("b") { "world" },
+]
+
+p Que.new(jobs).run
+# => "Hello world"
+```
+
+### Command Line
 
 ```bash
 $ bin/que "a=>b;b=>c;c=>"
@@ -46,8 +57,7 @@ cba
 # Roadmap
 
 - Turn the library into a Gem
-- Add functionality to Jobs, allow them to store Procedures to be called when
-  run.
+- Take over the world
 
 # License
 
