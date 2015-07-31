@@ -1,9 +1,13 @@
 # QQ 0.1.0
 
 [![Build Status](http://img.shields.io/travis/MrBeardy/OTBExercise.svg)][travis]
+[![Code Climate](http://img.shields.io/codeclimate/github/MrBeardy/OTBExercise.svg)][codeclimate]
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)][license]
+[![Coverage Status](http://img.shields.io/coveralls/MrBeardy/OTBExercise.svg)][coveralls]
 
 [travis]: https://travis-ci.org/MrBeardy/OTBExercise
+[codeclimate]: https://codeclimate.com/github/MrBeardy/OTBExercise
+[coveralls]: https://coveralls.io/r/MrBeardy/OTBExercise
 [license]: LICENSE
 
 QQ is a small library that takes a formatted string (or multi-dimensional 

@@ -1,5 +1,7 @@
-# require 'pry'
-require_relative '../lib/qq'
+require 'coveralls'
+require 'qq'
+
+Coveralls.wear!
 
 RSpec.configure do |config|
   config.color = true
