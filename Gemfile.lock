@@ -1,4 +1,10 @@
+PATH
+  remote: .
+  specs:
+    qq (0.1.0)
+
 GEM
+  remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
     rspec (3.2.0)
@@ -19,4 +25,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  qq!
   rspec

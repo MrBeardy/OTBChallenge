@@ -1,4 +1,4 @@
-# QQ 0.0.6
+# QQ 0.1.0
 
 QQ is a small library that takes a formatted string (or multi-dimensional 
 array) as input and stores it as Jobs with optional dependencies.

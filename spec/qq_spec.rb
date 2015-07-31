@@ -141,4 +141,10 @@ describe QQ do
     expect( job_nesting.run ).to eq 'cba'
     expect( job_no_block.run ).to eq 'c'
   end
+
+  it 'should fail if a job depends on an non-existent job' do
+    expect { 
+      QQ.new " a => q " 
+    }.to raise_exception QQ::NonExistentDependencyError
+  end
 end

@@ -3,6 +3,7 @@ require_relative 'qq/all'
 module QQ
   class CyclicDependencyError < StandardError; end
   class SelfDependencyError < StandardError; end
+  class NonExistentDependencyError < StandardError; end
 
   # Forward any missing methods over to Que::Queue
   # TODO: implement a more concrete solution.

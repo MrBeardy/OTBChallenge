@@ -9,11 +9,9 @@ module QQ
 
       @jobs = generate_jobs(jobs)
 
-      # Fail on any self-depenent jobs
-      unless ( (self_dependents = @jobs.select(&:has_self_dependency?)).empty? )
-        fail SelfDependencyError, 
-          "Jobs can't depend upon themselves.\n\t#{self_dependents}\n\n"
-      end
+      # Cleanup/refactor
+      ensure_no_self_dependencies
+      ensure_no_unknown_dependencies      
     end
 
     def <<(job)
@@ -80,6 +78,28 @@ module QQ
         else
           jobs << Job.new(id, dependencies)
         end
+      end
+    end
+
+    # Fail on any self-depenent jobs
+    def ensure_no_self_dependencies
+      self_dependents = @jobs.select(&:has_self_dependency?)
+
+      unless self_dependents.empty?
+        fail SelfDependencyError, 
+          "Jobs can't depend upon themselves.\n\t#{self_dependents}\n\n"
+      end
+    end
+
+    # Fail if any job depends on a non-existent job.
+    def ensure_no_unknown_dependencies
+      deps = @jobs.map(&:dependencies).flatten
+      jobs = @jobs.map(&:id).flatten
+      offending_jobs = deps.reject {|id| jobs.include? id}
+
+      unless offending_jobs.empty?
+        fail NonExistentDependencyError, 
+          "Jobs can only depend on jobs that exist.\n\t#{offending_jobs}\n\n"
       end
     end
   end
