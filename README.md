@@ -1,6 +1,6 @@
 # QQ 0.1.0
 
-[![Build Status](http://img.shields.io/travis/MrBeardy/otbexercise.svg)][travis]
+[![Build Status](http://img.shields.io/travis/MrBeardy/OTBExercise.svg)][travis]
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 
 [travis]: https://travis-ci.org/MrBeardy/otbexercise
