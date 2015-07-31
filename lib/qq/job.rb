@@ -1,4 +1,4 @@
-module Que
+module QQ
 
   # Holds information for a single job, including IDs for any dependencies.
   class Job

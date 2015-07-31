@@ -1,4 +1,4 @@
-module Que
+module QQ
   class JobList
     def initialize(jobs = [])
       if jobs.is_a? String

@@ -1,6 +1,6 @@
-require_relative 'que/all'
+require_relative 'qq/all'
 
-module Que
+module QQ
   class CyclicDependencyError < StandardError; end
   class SelfDependencyError < StandardError; end
 

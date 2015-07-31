@@ -1,5 +1,5 @@
 # require 'pry'
-require_relative '../lib/Que'
+require_relative '../lib/qq'
 
 RSpec.configure do |config|
   config.color = true

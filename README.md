@@ -1,6 +1,6 @@
-# Que 0.0.6
+# QQ 0.0.6
 
-Que is a small library that takes a formatted string (or multi-dimensional 
+QQ is a small library that takes a formatted string (or multi-dimensional 
 array) as input and stores it as Jobs with optional dependencies.
 
 This job list can then be sorted using 
@@ -9,9 +9,9 @@ proper dependency ordering and Cyclic dependency safety.
 
 # Usage
 ```ruby
-require 'que'
+require 'qq'
 
-que = Que.new %|
+qq = QQ.new %|
   a =>
   b => c
   c => f
@@ -20,10 +20,10 @@ que = Que.new %|
   f =>
 |
 
-p que.job_list.tsort_ids
-p que.run
+p qq.job_list.tsort_ids
+p qq.run
 
-Que.new([
+QQ.new([
   ["a", "b"]
   ["b", "c"]
   ["c"]
@@ -38,25 +38,24 @@ Que.new([
 
 ### Jobs
 ```ruby
-que = Que.new [
-  Que::Job.new('a', ['b']) { "world" },
-  Que::Job.new('b') { "Hello " },
+qq = QQ.new [
+  QQ::Job.new('a', ['b']) { "world" },
+  QQ::Job.new('b') { "Hello " },
 ]
 
-p que.run
+p qq.run
 # => "Hello world"
 ```
 
 ### Command Line
 
 ```bash
-$ bin/que "a=>b;b=>c;c=>"
+$ bin/qq "a=>b;b=>c;c=>"
 cba
 ```
 
 # Roadmap
 
-- Turn the library into a Gem
 - Take over the world
 
 # License

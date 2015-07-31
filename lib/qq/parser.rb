@@ -1,4 +1,4 @@
-module Que
+module QQ
 
   # Parses formatted input.
   class Parser

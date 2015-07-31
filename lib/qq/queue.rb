@@ -1,4 +1,4 @@
-module Que
+module QQ
 
   # Holds instances of Jobs, which can be run
   # in order of dependence.
