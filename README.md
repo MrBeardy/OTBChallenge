@@ -1,5 +1,7 @@
 # QQ 0.1.0
 
+[![QQ Build Status](https://api.travis-ci.org/MrBeardy/OTBExercise.svg)](https://travis-ci.org/MrBeardy/OTBExercise)
+
 QQ is a small library that takes a formatted string (or multi-dimensional 
 array) as input and stores it as Jobs with optional dependencies.
 
