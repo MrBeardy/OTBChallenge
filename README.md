@@ -3,7 +3,7 @@
 [![Build Status](http://img.shields.io/travis/MrBeardy/OTBExercise.svg)][travis]
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 
-[travis]: https://travis-ci.org/MrBeardy/otbexercise
+[travis]: https://travis-ci.org/MrBeardy/OTBExercise
 [license]: LICENSE
 
 QQ is a small library that takes a formatted string (or multi-dimensional 
