@@ -2,8 +2,8 @@
 
 [![Build Status](http://img.shields.io/travis/MrBeardy/OTBExercise.svg)][travis]
 [![Code Climate](http://img.shields.io/codeclimate/github/MrBeardy/OTBExercise.svg)][codeclimate]
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 [![Coverage Status](http://img.shields.io/coveralls/MrBeardy/OTBExercise.svg)][coveralls]
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)][license]
 
 [travis]: https://travis-ci.org/MrBeardy/OTBExercise
 [codeclimate]: https://codeclimate.com/github/MrBeardy/OTBExercise
@@ -31,19 +31,18 @@ qq = QQ.new %|
 |
 
 p qq.job_list.tsort_ids
+# => ["a", "f", "c", "b", "d", "e"]
+
 p qq.run
+# => "afcbde"
 
 QQ.new([
   ["a", "b"]
   ["b", "c"]
   ["c"]
 ]).run
+# =>"cba"
 
-# results
-# 
-# ["a", "f", "c", "b", "d", "e"]
-# "afcbde"
-# "cba"
 ```
 
 ### Jobs
