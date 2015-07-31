@@ -9,5 +9,5 @@ before_install:
   - "rm ${BUNDLE_GEMFILE}.lock"
 install: bundle install
 before_script: bundle update
-script: bundle exec rake spec
+script: bundle exec rspec
 cache: bundler
