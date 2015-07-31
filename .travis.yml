@@ -4,14 +4,10 @@ rvm:
   - 2.1.0
   - 2.0.0
   - 1.9.3
-
 before_install:
   - gem install bundler
   - "rm ${BUNDLE_GEMFILE}.lock"
 install: bundle install
-
-before_script:
-  - bundle update
+before_script: bundle update
 script: bundle exec rake spec
-
 cache: bundler
