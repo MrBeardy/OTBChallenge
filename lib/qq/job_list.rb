@@ -1,17 +1,15 @@
 module QQ
+  # Holds an array of jobs with ability to TSort them.
   class JobList
     def initialize(jobs = [])
-      if jobs.is_a? String
-        jobs = Parser.from_string(jobs)
-      end
+      jobs = Parser.from_string(jobs) if jobs.is_a? String
 
       # TODO: Add fail-safe for symbols.
 
       @jobs = generate_jobs(jobs)
 
-      # Cleanup/refactor
       ensure_no_self_dependencies
-      ensure_no_unknown_dependencies      
+      ensure_no_unknown_dependencies
     end
 
     def <<(job)
@@ -25,22 +23,20 @@ module QQ
 
     # Returns true/false depending on if the JobList contains a Job with the ID.
     def include?(id)
-      !!find_by_id(id)
+      find_by_id(id).nil?
     end
 
     # Creates a TSortableHash for all of the jobs and dependencies and returns
     # the TSorted array
     def tsort_ids
-      begin
-        @jobs.each_with_object(unsorted = TSortableHash.new(0)) do |job, hash|
-          hash[job.id] = job.dependencies
-        end
-
-        unsorted.tsort
-      rescue TSort::Cyclic => e
-        fail CyclicDependencyError, 
-          "Jobs cannot have Circular dependencies: #{e}."
+      @jobs.each_with_object(unsorted = TSortableHash.new(0)) do |job, hash|
+        hash[job.id] = job.dependencies
       end
+
+      unsorted.tsort
+    rescue TSort::Cyclic => e
+      raise CyclicDependencyError,
+            "Jobs cannot have Circular dependencies: #{e}."
     end
 
     # Takes a TSorted array and replaces the IDs with Job instances from @jobs.
@@ -59,6 +55,10 @@ module QQ
       @jobs.length
     end
 
+    def count(*args, &block)
+      @jobs.count(*args, &block)
+    end
+
     def select(*args, &block)
       @jobs.select(*args, &block)
     end
@@ -67,39 +67,45 @@ module QQ
       @jobs
     end
 
+    def ids
+      @jobs.map(&:id).flatten.uniq
+    end
+
+    def dependencies
+      @jobs.map(&:dependencies).flatten.uniq
+    end
+
     private
 
     # Create Job instances for each of the jobs.
     def generate_jobs(jobs)
-      jobs.each_with_object([]) do |(id, dependencies), jobs|
+      jobs.each_with_object([]) do |(id, dependencies), arr|
         # Allow Job objects and Arrays to be interchanged.
         if id.is_a? Job
-          jobs << id
+          arr << id
         else
-          jobs << Job.new(id, dependencies)
+          arr << Job.new(id, dependencies)
         end
       end
     end
 
     # Fail on any self-depenent jobs
     def ensure_no_self_dependencies
-      self_dependents = @jobs.select(&:has_self_dependency?)
+      self_dependents = @jobs.select(&:self_dependent?)
 
       unless self_dependents.empty?
-        fail SelfDependencyError, 
-          "Jobs can't depend upon themselves.\n\t#{self_dependents}\n\n"
+        fail SelfDependencyError,
+             "Jobs can't depend upon themselves.\n\t#{self_dependents}\n\n"
       end
     end
 
     # Fail if any job depends on a non-existent job.
     def ensure_no_unknown_dependencies
-      deps = @jobs.map(&:dependencies).flatten
-      jobs = @jobs.map(&:id).flatten
-      offending_jobs = deps.reject {|id| jobs.include? id}
+      offending_jobs = dependencies.reject { |id| ids.include? id }
 
       unless offending_jobs.empty?
-        fail NonExistentDependencyError, 
-          "Jobs can only depend on jobs that exist.\n\t#{offending_jobs}\n\n"
+        fail NonExistentDependencyError,
+             "Jobs can only depend on jobs that exist.\n\t#{offending_jobs}\n\n"
       end
     end
   end

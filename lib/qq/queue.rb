@@ -1,11 +1,10 @@
 module QQ
-
   # Holds instances of Jobs, which can be run
   # in order of dependence.
   class Queue
     attr_reader :job_list
 
-    def initialize(jobs = [])  
+    def initialize(jobs = [])
       @job_list = JobList.new(jobs)
     end
 

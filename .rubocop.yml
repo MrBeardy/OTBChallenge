@@ -1,0 +1,8 @@
+GuardClause:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+TrailingComma:
+  Enabled: false

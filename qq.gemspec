@@ -1,14 +1,16 @@
-$:<< File.dirname(File.expand_path("../lib/qq", __FILE__))
-require "qq/version"
+$LOAD_PATH << File.dirname(File.expand_path('../lib/qq', __FILE__))
+require 'qq/version'
 
 Gem::Specification.new do |s|
-  s.name          = "qq"
+  s.name          = 'qq'
   s.version       = QQ::VERSION
-  s.authors       = ["Michael Hibbs"]
-  s.email         = ["hibbs.michael@gmail.com"]
-  s.description   = %q{QQ is a small library that takes a formatted string (or multi-dimensional array) as input and stores it as Jobs with optional dependencies.}
-  s.summary       = %q{QQ - A small library that handles dependency-driven jobs.}
-  s.homepage      = ""
+  s.authors       = ['Michael Hibbs']
+  s.email         = ['hibbs.michael@gmail.com']
+  s.description   = 'QQ is a small library that takes a formatted string (or ' \
+                    'multi-dimensional array) as input and stores it as Jobs ' \
+                    'with optional dependencies.'
+  s.summary       = %(QQ - A small library that handles dependency-driven jobs.)
+  s.homepage      = ''
 
   s.files         = Dir['LICENSE', 'README.md', 'lib/**/*', 'bin/*']
   s.executables   = ['qq']
@@ -17,5 +19,5 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'bundler', '~> 1.0'
 end
