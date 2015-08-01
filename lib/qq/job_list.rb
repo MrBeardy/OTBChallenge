@@ -8,7 +8,6 @@ module QQ
 
       @jobs = generate_jobs(jobs)
 
-      ensure_no_self_dependencies
       ensure_no_unknown_dependencies
     end
 
@@ -86,16 +85,6 @@ module QQ
         else
           arr << Job.new(id, dependencies)
         end
-      end
-    end
-
-    # Fail on any self-depenent jobs
-    def ensure_no_self_dependencies
-      self_dependents = @jobs.select(&:self_dependent?)
-
-      unless self_dependents.empty?
-        fail SelfDependencyError,
-             "Jobs can't depend upon themselves.\n\t#{self_dependents}\n\n"
       end
     end
 

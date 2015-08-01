@@ -78,13 +78,21 @@ describe QQ do
   end
 
   it 'should raise a SelfDependencyError when a job depends upon itself' do
+    # Simple
     expect { QQ.new 'a => a' }.to raise_exception(QQ::SelfDependencyError)
+
+    # Complex
     expect do
       QQ.new [
         %w(a b),
         QQ::Job.new('b', ['c']),
         ['c', %w(a b c)],
       ]
+    end.to raise_exception(QQ::SelfDependencyError)
+
+    # Job Creation
+    expect do
+      QQ::Job.new('a', ['a'])
     end.to raise_exception(QQ::SelfDependencyError)
   end
 
