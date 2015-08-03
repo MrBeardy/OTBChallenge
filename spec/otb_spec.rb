@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe "On The Beach Exercise", otb: true do
-  it 'should return an empty string' do    
+describe 'On The Beach Exercise', otb: true do
+  it 'should return an empty string' do
     expect(QQ.new('').run).to eq ''
   end
 
@@ -28,7 +28,7 @@ describe "On The Beach Exercise", otb: true do
       e => b
       f =>
     )
-  
+
     # Sort the jobs and store only the IDs
     s = qq.job_list.tsort_ids
 
@@ -37,16 +37,18 @@ describe "On The Beach Exercise", otb: true do
 
     # c before b
     expect(s.find_index('c')).to be < s.find_index('b')
-    expect(s.find_index('b')).to be < s.find_index('e')
 
     # b before e
+    expect(s.find_index('b')).to be < s.find_index('e')
+
+    # a before d
     expect(s.find_index('a')).to be < s.find_index('d')
 
     # afcbde
     expect(s.join).to eq 'afcbde'
   end
 
-  it 'should raise an error stating that jobs can’t depend on themselves' do
+  it 'should raise error stating that jobs can’t depend on themselves' do
     expect do
       QQ.new %(
         a =>
@@ -56,7 +58,7 @@ describe "On The Beach Exercise", otb: true do
     end.to raise_exception(QQ::SelfDependencyError)
   end
 
-  it 'should raise an error stating that jobs can’t have circular dependencies' do
+  it 'should raise error stating that jobs can’t have circular dependencies' do
     expect do
       QQ.new(%(
         a =>
