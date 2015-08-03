@@ -63,6 +63,12 @@ $ bin/qq 'a=>b;b=>c;c=>'
 cba
 ```
 
+# Testing
+
+To test, use the `rspec` command in the root directory. 
+You can also limit testing against the OTB exercise specification by
+using `rspec --tag otb`.
+
 # Roadmap
 
 - Take over the world

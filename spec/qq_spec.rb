@@ -1,5 +1,8 @@
 require 'spec_helper'
 
+# --
+# TODO: Make the current tests more specific to the library and remove any tests
+#       for the OTB Specification.
 describe QQ do
   it 'should return a blank string' do
     qq = QQ.new
