@@ -48,7 +48,7 @@ describe 'On The Beach Exercise', otb: true do
     expect(s.join).to eq 'afcbde'
   end
 
-  it 'should raise error stating that jobs can’t depend on themselves' do
+  it 'should raise error stating that jobs can\’t depend on themselves' do
     expect do
       QQ.new %(
         a =>
@@ -58,7 +58,7 @@ describe 'On The Beach Exercise', otb: true do
     end.to raise_exception(QQ::SelfDependencyError)
   end
 
-  it 'should raise error stating that jobs can’t have circular dependencies' do
+  it 'should raise error stating that jobs can\’t have circular dependencies' do
     expect do
       QQ.new(%(
         a =>
